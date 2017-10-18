@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>京东</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<script src="js/angular-1.4.6.min.js"></script>
+		<script src="js/angular-route.min.js"></script>
+		<script src="js/swiper.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="js/swiper.min.css" />
+	</head>
+
+	<body ng-app="app" ng-controller="aaa">
+		<header>
+			<div class="d1"><img ng-src="{{list.img}}" /></div>
+			<div class="d2">
+				<div class="d21"><img src="img/东京_03.jpg" />
+					<p>扫啊扫</p>
+				</div>
+				<div class="d22"><input type="text" placeholder="荣耀手机" /></div>
+				<div class="d21"><img src="img/东京_05.jpg" />
+					<p>消息</p>
+				</div>
+			</div>
+		</header>
+		<div class="swiper-container my">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide" ng-repeat="x in list1">
+					<img ng-src="{{x.img}}" />
+				</div>
+			</div>
+		</div>
+		<ul class="u1">
+			<li ng-repeat="x in list2"><img ng-src="{{x.img}}" />
+				<p>{{x.txt}}</p>
+			</li>
+		</ul>
+		<div class="sw">
+			<div class="sw1">
+				<img src="img/东京_42.jpg" />
+			</div>
+			<div class="swiper-container my1">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" ng-repeat="x in list3">
+						<span style="color: red;">{{x.txt}}</span> <span style="letter-spacing:normal;">{{x.txt1}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="d5">
+		<div class="d51">
+			<div class="d511"><img src="img/东京_46.jpg"/></div>
+			<div>10点场</div>
+			<div>
+				<span>{{cDate | date:'HH'}}</span>:
+				<span>{{cDate | date:'mm'}}</span>:
+				<span>{{cDate | date:'ss'}}</span>
+			</div>
+		</div>
+		<div class="d52">
+			<img src="img/东京_46.jpg"/>
+		</div>
+		</div>
+		<div class="swiper-container my2">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<ul class="uu">
+						<li ng-repeat="x in list4"><img src="{{x.img}}"/><p>{{x.txt | currency:"￥"}}</p><s>{{x.txt1 | currency:"￥"}}</s></li>
+					</ul>
+					
+				</div>
+				<div class="swiper-slide">
+					<ul class="uu">
+						<li ng-repeat="x in list4"><img src="{{x.img}}"/><p>{{x.txt | currency:"￥"}}</p><s>{{x.txt1 | currency:"￥"}}</s></li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+		<div class="tt">
+			<div class="tt1">
+				<div class="tt11">
+					<img src="img/东京_03.gif" style="vertical-align: middle;"/><span>嘘！华硕偷偷给你好福利！</span>
+				</div>
+				<div class="tt12">
+					<img src="img/东京_65.jpg" style="vertical-align: middle;"/>
+				</div>
+			</div>
+		</div>
+		<ul class="u2">
+			<a href="#/a">
+				<li><img src="img/东京a1.jpg" />
+					<p>首页</p>
+				</li>
+			</a>
+			<a href="#/b">
+				<li><img src="img/东京_07.jpg" />
+					<p>首页</p>
+				</li>
+			</a>
+			<a href="#/c">
+				<li><img src="img/东京a2.jpg" />
+					<p>首页</p>
+				</li>
+			</a>
+			<a href="#/d">
+				<li><img src="img/东京a3.jpg" />
+					<p>首页</p>
+				</li>
+			</a>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		var app = angular.module("app", [])
+		app.controller("aaa", function($scope, $http, $timeout,$interval) {
+		$scope.newDate = new Date().getTime();
+					$interval(function() {
+						$scope.xDate = new Date().getTime()
+						$scope.cDate = $scope.newDate - $scope.xDate
+					}, 1000)
+			$http({
+				method: "get",
+				url: "http://localhost:8787/"
+			}).then(function(data) {
+				console.log(data.data)
+				$scope.list = data.data.list
+				$scope.list1 = data.data.list1
+				$scope.list2 = data.data.list2
+				$scope.list3 = data.data.list3
+				$scope.list4=data.data.list4
+			})
+			$timeout(function() {
+				new Swiper(".my", {
+					autoplay: 1000,
+					loop: true
+				})
+			}, 1000)
+			$timeout(function() {
+				new Swiper(".my1", {
+					autoplay: 1000,
+					loop: true,
+					direction: 'vertical',
+
+				})
+			}, 1000)
+			$timeout(function() {
+				new Swiper(".my2", {
+				freeMode : true,
+				freeModeMomentum : false,
+				})
+			}, 1000)
+			
+		})
+		
+		
+		
+	</script>
+
+</html>
